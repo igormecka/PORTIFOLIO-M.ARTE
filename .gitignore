@@ -1,0 +1,4 @@
+node_modules/
+.env
+drive_credentials.json
+__pycache__/

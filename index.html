@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M.arte — Fotografia & Vídeo</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Navigation -->
+<nav>
+  <a href="#" class="nav-logo" onclick="goHome()">m<span>.</span>arte</a>
+  <ul class="nav-links">
+    <li><a href="#portfolio">Portfólio</a></li>
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#contato">Contato</a></li>
+    <li><a href="#" onclick="openDriveConfig(event)">Admin ↗</a></li>
+  </ul>
+</nav>
+
+<!-- Hero Section (Home) -->
+<div id="main-site">
+<section id="hero">
+  <div class="hero-slides" id="heroSlides">
+    <!-- Slides via driveData -->
+  </div>
+
+  <div class="hero-content animate-up">
+    <div>
+      <div class="section-label" style="margin-bottom: 1.5rem; color: var(--gold-dim);">
+        Fotografia & Vídeo
+      </div>
+      <h1 class="hero-title">
+        Momentos<br>
+        <em>eternos.</em>
+      </h1>
+    </div>
+    <div class="hero-right delay-2">
+      <p class="hero-desc">
+        Casamentos<br>
+        capturados<br>
+        com alma
+      </p>
+      <a href="#portfolio" class="hero-cta">Ver portfólio</a>
+    </div>
+  </div>
+
+  <div class="slide-indicators" id="slideIndicators">
+    <!-- Indicators via driveData -->
+  </div>
+</section>
+
+<div class="line-sep"></div>
+
+<!-- Portfolio Section -->
+<section id="portfolio">
+  <div class="drive-sync-badge">
+    <span class="dot"></span>
+    Sincronizado automaticamente via Google Drive
+  </div>
+
+  <div class="portfolio-header reveal">
+    <div>
+      <div class="section-label">Portfólio</div>
+      <h2 class="portfolio-title">
+        Cada casamento,<br>
+        <em>uma história.</em>
+      </h2>
+    </div>
+    <div class="portfolio-count" id="albumCount">— Carregando álbuns...</div>
+  </div>
+
+  <div class="albums-grid" id="albumsGrid">
+    <!-- Albums dynamically loaded -->
+  </div>
+</section>
+
+<div class="line-sep"></div>
+
+<!-- About Section -->
+<section id="sobre">
+  <div class="sobre-image reveal">
+    <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:6rem;font-style:italic;color:rgba(201,169,110,0.12);">M</div>
+  </div>
+  <div class="sobre-text reveal delay-1">
+    <div class="section-label">Sobre</div>
+    <blockquote class="sobre-quote">
+      "Fotografia não é<br>capturar o que existe —<br>é revelar o que <em>sente.</em>"
+    </blockquote>
+    <p class="sobre-body">
+      A M.arte nasceu do amor por histórias reais. Cada casamento é único, cada casal carrega uma trajetória que merece ser eternizada com cuidado e arte. Nossa abordagem é documental e poética — presente nos momentos que passam rápido demais.
+    </p>
+    <p class="sobre-body">
+      Trabalhamos em Minas Gerais e em todo o Brasil, levando nossa linguagem visual autoral para cada celebração.
+    </p>
+    <div class="sobre-stats">
+      <div>
+        <div class="stat-num">3<em>+</em></div>
+        <div class="stat-label">Anos de experiência</div>
+      </div>
+      <div>
+        <div class="stat-num">120<em>+</em></div>
+        <div class="stat-label">Casamentos</div>
+      </div>
+      <div>
+        <div class="stat-num">15<em>k</em></div>
+        <div class="stat-label">Momentos capturados</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="line-sep"></div>
+
+<!-- Contact Section -->
+<section id="contato">
+  <div class="section-label" style="justify-content: center; margin-bottom: 1.5rem;">Contato</div>
+  <h2 class="contato-title reveal">
+    Vamos contar<br>
+    <em>sua história?</em>
+  </h2>
+  <p class="contato-subtitle reveal delay-1">Disponível para 2025 & 2026</p>
+  <div class="contato-links reveal delay-2">
+    <a href="https://wa.me/5531999999999" class="contato-link primary">WhatsApp</a>
+    <a href="mailto:contato@marte.foto" class="contato-link">E-mail</a>
+    <a href="https://instagram.com/m.arte" class="contato-link">Instagram</a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-logo">m<span>.</span>arte</div>
+  <div class="footer-copy">© 2025 M.arte Fotografia · Todos os direitos reservados</div>
+  <div class="footer-copy">Jaboticatubas, Minas Gerais</div>
+</footer>
+</div>
+
+<!-- Individual Wedding Page -->
+<div id="wedding-page">
+  <div class="wedding-hero" id="weddingHero">
+    <button class="back-btn" onclick="closeWedding()">Voltar ao portfólio</button>
+    <div class="wedding-hero-content">
+      <div class="section-label" style="margin-bottom: 1rem;" id="weddingLabel">Casamento</div>
+      <h1 class="wedding-title-page" id="weddingTitle">Nome <em>& Nome</em></h1>
+      <div class="wedding-date-page" id="weddingDate">Fotos</div>
+    </div>
+  </div>
+  <div class="photos-grid" id="photosGrid"></div>
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close">Fechar ×</button>
+  <img id="lightboxImg" src="" alt="">
+</div>
+
+<!-- Drive Config Panel -->
+<div class="drive-config" id="driveConfig">
+  <button class="config-close" onclick="closeDriveConfig()">Fechar ×</button>
+  <div class="drive-config-title">Painel Administrativo</div>
+  <div class="drive-config-sub">A automação está rodando no GitHub Actions</div>
+  <div class="config-field">
+    <label class="config-label">Service Account Email</label>
+    <input type="text" class="config-input" readonly value="m-arte-sync@forward-theorem-...iam.gserviceaccount.com">
+  </div>
+  <button class="config-btn" onclick="testDriveConnection()">Verificar Status GitHub Actions</button>
+  <button class="config-btn-sec" onclick="syncNow()">↻ Sincronização é automática</button>
+</div>
+
+<!-- Drive status indicator -->
+<div class="drive-status">
+  <div class="drive-dot"></div>
+  <span>Drive sincronizado</span>
+</div>
+
+<!-- Settings button -->
+<button class="settings-btn" onclick="openDriveConfig(event)">⚙ Painel</button>
+
+<!-- SCRIPT INCLUSION: Drive Data comes BEFORE main.js -->
+<script src="assets/js/drive_data.js"></script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
