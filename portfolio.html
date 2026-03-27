@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfólio — M.arte</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+  html, body {
+    overflow: hidden; /* we manage scroll inside layout */
+  }
+  .portfolio-layout {
+    display: flex;
+    height: 100vh;
+    padding-top: 5rem; /* account for nav */
+  }
+  .portfolio-sidebar {
+    width: 350px;
+    background: var(--bg2);
+    border-right: 1px solid rgba(255,255,255,0.05);
+    overflow-y: auto;
+    padding: 2rem;
+  }
+  .sidebar-header {
+    font-family: var(--serif);
+    font-size: 2rem;
+    color: var(--gold);
+    margin-bottom: 2rem;
+    font-style: italic;
+  }
+  .sidebar-album {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  .sidebar-album:hover, .sidebar-album.active {
+    background: rgba(201,169,110,0.1);
+  }
+  .sidebar-album-cover {
+    width: 50px; height: 50px;
+    border-radius: 4px;
+    background-size: cover;
+    background-position: center;
+  }
+  .sidebar-album-name {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    color: var(--cream);
+  }
+  .sidebar-album-meta {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    color: var(--cream-mute);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  
+  .portfolio-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 3rem 4rem;
+    background: var(--bg);
+  }
+  
+  .header-content {
+    margin-bottom: 3rem;
+  }
+  .header-content h1 {
+    font-family: var(--serif);
+    font-size: 4rem;
+    font-weight: 300;
+  }
+  .header-content h1 em { color: var(--gold); }
+  
+  .photos-grid-inner {
+    columns: 3;
+    gap: 1.5rem;
+  }
+  .photos-grid-inner img {
+    width: 100%;
+    margin-bottom: 1.5rem;
+    break-inside: avoid;
+    border-radius: 2px;
+    cursor: zoom-in;
+    transition: transform 0.4s, filter 0.4s;
+    filter: brightness(0.9);
+  }
+  .photos-grid-inner img:hover {
+    transform: scale(1.02);
+    filter: brightness(1.1);
+  }
+  
+  @media (max-width: 900px) {
+    .portfolio-layout { flex-direction: column; overflow: auto; height: auto; padding-top: 6rem; }
+    .portfolio-sidebar { width: 100%; height: auto; max-height: 40vh; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .portfolio-content { overflow: visible; padding: 2rem; }
+    .photos-grid-inner { columns: 1; }
+    html, body { overflow: auto; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="assets/img/logo.png" alt="M.arte" style="height:32px; margin-right:15px; vertical-align:middle;">
+    m<span>.</span>arte
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Início</a></li>
+    <li><a href="portfolio.html" style="color:var(--gold)">Portfólio</a></li>
+  </ul>
+</nav>
+
+<div class="portfolio-layout">
+  <div class="portfolio-sidebar" id="sidebar">
+    <div class="sidebar-header">Casamentos</div>
+    <!-- Injetado dinamicamente -->
+  </div>
+  
+  <div class="portfolio-content" id="contentArea">
+    <div class="header-content" id="albumHeader">
+      <h1>Selecione um <em>álbum</em></h1>
+    </div>
+    <div class="photos-grid-inner" id="photosGrid">
+      <!-- Fotos aqui -->
+    </div>
+  </div>
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close">Fechar ×</button>
+  <img id="lightboxImg" src="" alt="">
+</div>
+
+<script src="assets/js/drive_data.js"></script>
+<script>
+  // Cursor básico
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+  document.addEventListener('mousemove', e => {
+    mouseX = e.clientX; mouseY = e.clientY;
+    cursor.style.left = mouseX + 'px'; cursor.style.top = mouseY + 'px';
+  });
+  function animateRing() {
+    ringX += (mouseX - ringX) * 0.12; ringY += (mouseY - ringY) * 0.12;
+    ring.style.left = ringX + 'px'; ring.style.top = ringY + 'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+  
+  // Lightbox
+  function openLightbox(src) {
+      document.getElementById('lightboxImg').src = src;
+      document.getElementById('lightbox').classList.add('open');
+  }
+  function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    if (typeof driveData === 'undefined' || !driveData.albums) return;
+    
+    const sidebar = document.getElementById('sidebar');
+    const urlParams = new URLSearchParams(window.location.search);
+    const requestedAlbum = urlParams.get('album');
+    
+    let defaultAlbum = driveData.albums[0];
+    
+    // Gerar Sidebar
+    driveData.albums.forEach(album => {
+      const div = document.createElement('div');
+      div.className = 'sidebar-album';
+      
+      if(requestedAlbum && album.name === requestedAlbum) {
+          defaultAlbum = album;
+          div.classList.add('active');
+      }
+      
+      div.innerHTML = `
+        <div class="sidebar-album-cover" style="background-image: url('${album.cover}')"></div>
+        <div>
+          <div class="sidebar-album-name">${album.name}</div>
+          <div class="sidebar-album-meta">${album.images.length} fotos</div>
+        </div>
+      `;
+      div.onclick = () => {
+        document.querySelectorAll('.sidebar-album').forEach(el => el.classList.remove('active'));
+        div.classList.add('active');
+        renderAlbum(album);
+      };
+      sidebar.appendChild(div);
+    });
+    
+    // Render Album Inicial
+    if(defaultAlbum) {
+        // Find it in sidebar to make active if no param was provided
+        if(!requestedAlbum) {
+           const first = sidebar.querySelector('.sidebar-album');
+           if(first) first.classList.add('active');
+        }
+        renderAlbum(defaultAlbum);
+    }
+  });
+  
+  function renderAlbum(album) {
+    const titleEl = document.getElementById('albumHeader');
+    const grid = document.getElementById('photosGrid');
+    
+    const parts = album.name.split(' & ');
+    if (parts.length > 1) {
+      titleEl.innerHTML = `<h1>${parts[0]} <em>& ${parts[1]}</em></h1>`;
+    } else {
+      titleEl.innerHTML = `<h1>${album.name}</h1>`;
+    }
+    
+    grid.innerHTML = '';
+    
+    album.images.forEach(imgUrl => {
+      const img = document.createElement('img');
+      img.src = imgUrl;
+      img.loading = 'lazy';
+      img.onclick = () => openLightbox(imgUrl);
+      grid.appendChild(img);
+    });
+    
+    document.querySelector('.portfolio-content').scrollTop = 0;
+  }
+</script>
+</body>
+</html>

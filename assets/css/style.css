@@ -1,4 +1,4 @@
-﻿  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
   :root {
     --bg: #0a0a08;
@@ -115,29 +115,53 @@
     inset: 0;
     overflow: hidden;
   }
-  .hero-slide {
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    transition: opacity 1.5s ease;
-    background-size: cover;
-    background-position: center;
-    transform: scale(1.05);
-    transition: opacity 1.5s ease, transform 8s ease;
+  
+  /* MURAL BACKGROUND CON MASCARA SUAVE */
+  .mural-bg {
+    position: absolute; inset: 0;
+    /* Degradê radial suave (blur mask) */
+    mask-image: radial-gradient(ellipse 65% 85% at 50% 50%, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 70%);
+    -webkit-mask-image: radial-gradient(ellipse 65% 85% at 50% 50%, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 70%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
   }
-  .hero-slide.active {
-    opacity: 1;
-    transform: scale(1);
+  .mural-track {
+    display: flex;
+    gap: 3vw;
+    height: 70vh;
+    animation: panTrack 120s linear infinite;
   }
-  /* Placeholder gradient slides (replace with real photos from Drive) */
-  .hero-slide:nth-child(1) { background: linear-gradient(135deg, #1a1208 0%, #2d1f0a 40%, #0a0a08 100%); }
-  .hero-slide:nth-child(2) { background: linear-gradient(225deg, #0a0f1a 0%, #0f1d2d 40%, #0a0a08 100%); }
-  .hero-slide:nth-child(3) { background: linear-gradient(45deg, #1a0a0f 0%, #2d0f1a 40%, #0a0a08 100%); }
-  .hero-slide::after {
-    content: '';
+  @keyframes panTrack {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .mural-img {
+    height: 100%;
+    width: auto;
+    aspect-ratio: 4/5;
+    object-fit: cover;
+    filter: grayscale(100%) sepia(20%) contrast(1.1) brightness(0.6);
+    transition: filter 1s ease;
+  }
+  .mural-img:hover {
+     filter: grayscale(80%) sepia(20%) contrast(1.1) brightness(0.9);
+  }
+  
+  .hero-huge-title {
     position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(10,10,8,0.95) 0%, rgba(10,10,8,0.3) 50%, rgba(10,10,8,0.2) 100%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--serif);
+    font-size: clamp(8rem, 20vw, 24rem);
+    font-weight: 300;
+    /* font-style: italic; */
+    color: rgba(240, 235, 224, 0.95);
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 10;
+    mix-blend-mode: overlay;
   }
   /* Simulate photo content in slides */
   .hero-slide::before {
@@ -211,8 +235,6 @@
     color: var(--bg);
     border-color: var(--gold);
   }
-  .hero-cta::after { content: 'â†’'; transition: transform 0.3s; }
-  .hero-cta:hover::after { transform: translateX(4px); }
 
   /* Slide indicators */
   .slide-indicators {
@@ -277,13 +299,16 @@
     background: var(--gold-dim);
   }
 
-  /* Portfolio section */
-  #portfolio { background: var(--bg); padding-top: 4rem; }
+  /* Drive Sync Badge */
+  .drive-sync-badge { display: none; }
+
+  /* Portfolio Layout Horizontal */
+  #portfolio {
+    padding: 8rem 0;
+  }
   .portfolio-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-bottom: 5rem;
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 4rem; padding: 0 4rem;
   }
   .portfolio-title {
     font-family: var(--serif);
@@ -304,18 +329,29 @@
 
   /* Wedding album grid */
   .albums-grid {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    gap: 1.5rem;
-    auto-rows: auto;
+    display: flex;
+    gap: 2.5rem;
+    padding: 1rem 4rem 4rem 4rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+    scrollbar-color: var(--gold-dim) var(--bg2);
   }
+  .albums-grid::-webkit-scrollbar { height: 6px; }
+  .albums-grid::-webkit-scrollbar-track { background: var(--bg2); }
+  .albums-grid::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 3px; }
+
   .album-card {
+    min-width: 320px;
+    max-width: 320px;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    text-decoration: none;
+    display: block;
     position: relative;
     overflow: hidden;
     cursor: pointer;
     background: var(--bg3);
-    text-decoration: none;
-    display: block;
   }
   .album-card:nth-child(1) { grid-column: span 7; }
   .album-card:nth-child(2) { grid-column: span 5; }
@@ -326,11 +362,6 @@
   .album-card:nth-child(7) { grid-column: span 6; }
 
   .album-thumb {
-    aspect-ratio: 3/2;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     position: relative;
     overflow: hidden;
     transition: transform var(--transition);

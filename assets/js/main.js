@@ -60,32 +60,27 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function populateHero(images) {
-  const slidesContainer = document.getElementById('heroSlides');
-  const indicatorsContainer = document.getElementById('slideIndicators');
-  if (!images || images.length === 0 || !slidesContainer) return;
+  const container = document.getElementById('muralBg');
+  if(!container || !images || images.length === 0) return;
   
-  slidesContainer.innerHTML = '';
-  indicatorsContainer.innerHTML = '';
+  container.innerHTML = '';
   
-  images.forEach((imgUrl, i) => {
-    const slide = document.createElement('div');
-    slide.className = 'hero-slide';
-    if (i === 0) slide.classList.add('active');
-    slide.style.backgroundImage = `url(${imgUrl})`;
-    // Optional: adding transparent label overlay based on index
-    const labels = ['M', 'Arte', 'Amor', 'Luz'];
-    slide.setAttribute('data-label', labels[i % labels.length]);
-    slidesContainer.appendChild(slide);
-    
-    const dot = document.createElement('div');
-    dot.className = 'slide-dot';
-    if (i === 0) dot.classList.add('active');
-    dot.onclick = () => goToSlide(i);
-    indicatorsContainer.appendChild(dot);
+  const track = document.createElement('div');
+  track.className = 'mural-track';
+  container.appendChild(track);
+  
+  // Duplicar imagens pra preencher a tela caso tenham poucas
+  let allImages = [];
+  while(allImages.length < 15) {
+     allImages = [...allImages, ...images];
+  }
+  
+  allImages.forEach((imgUrl) => {
+    const img = document.createElement('img');
+    img.src = imgUrl;
+    img.className = 'mural-img';
+    track.appendChild(img);
   });
-  
-  slides = document.querySelectorAll('.hero-slide');
-  dots = document.querySelectorAll('.slide-dot');
 }
 
 function populateAlbums(albums) {
@@ -109,20 +104,47 @@ function populateAlbums(albums) {
     
     const div = document.createElement('div');
     div.className = `album-card reveal ${delayClass}`;
-    div.style.cursor = 'pointer';
-    div.onclick = () => openWeddingDynamic(album);
     
+    let imgIdx = 0;
+    let isScrolling = false;
+
     div.innerHTML = `
-      <div class="album-thumb">
-        <div class="album-thumb-bg" style="background-image: url('${album.cover}')"></div>
-        <div class="album-thumb-icon">${initials}</div>
+      <div class="album-thumb" style="background-image: url('${album.cover}')">
+        <div class="album-thumb-icon" style="position:absolute;font-family:var(--serif);font-size:3rem;font-style:italic;color:rgba(201,169,110,0.3);top:50%;left:50%;transform:translate(-50%,-50%);">${initials}</div>
       </div>
-      <div class="album-arrow">↗</div>
-      <div class="album-info">
-        <div class="album-name">${album.name}</div>
-        <div class="album-meta">${album.images.length} fotos</div>
+      <div class="album-arrow" style="position:absolute;top:1rem;right:1rem;color:var(--gold-dim);opacity:0.8;">↗</div>
+      <div class="album-info" style="position:absolute;bottom:0;width:100%;padding:1.5rem;background:linear-gradient(to top,rgba(10,10,10,0.9),transparent);">
+        <div class="album-name" style="font-family:var(--serif);font-size:1.2rem;">${album.name}</div>
+        <div class="album-meta" style="font-family:var(--mono);font-size:0.6rem;letter-spacing:0.1em;color:var(--gold-dim);margin-top:0.2rem;">${album.images.length} FOTOS ↓ SCROLL</div>
       </div>
     `;
+
+    const thumbBg = div.querySelector('.album-thumb');
+    
+    div.addEventListener('wheel', (e) => {
+        if(album.images && album.images.length > 1) {
+            e.preventDefault();
+            if(isScrolling) return;
+            isScrolling = true;
+            if(e.deltaY > 0) {
+                imgIdx = (imgIdx + 1) % album.images.length;
+            } else {
+                imgIdx = (imgIdx - 1 + album.images.length) % album.images.length;
+            }
+            thumbBg.style.backgroundImage = `url('${album.images[imgIdx]}')`;
+            setTimeout(() => { isScrolling = false; }, 300); 
+            e.stopPropagation(); 
+        }
+    }, { passive: false });
+    
+    div.addEventListener('mouseleave', () => {
+        imgIdx = 0;
+        thumbBg.style.backgroundImage = `url('${album.cover}')`;
+    });
+
+    // Manter o clique pra abrir a janela original
+    div.onclick = () => openWeddingDynamic(album);
+    
     grid.appendChild(div);
   });
   
