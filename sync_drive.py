@@ -3,6 +3,24 @@ import json
 import logging
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
+import datetime
+import urllib.request
+import email.utils
+import google.auth._helpers
+
+def get_google_time():
+    try:
+        req = urllib.request.urlopen('https://www.google.com', timeout=5)
+        d = req.headers['Date']
+        # Convert RFC 2822 date to naive datetime in UTC
+        dt = email.utils.parsedate_to_datetime(d)
+        return dt.replace(tzinfo=None)
+    except Exception as e:
+        return _original_utcnow() - datetime.timedelta(minutes=5)
+
+# Bypass time drift using internet HTTP header time
+_original_utcnow = google.auth._helpers.utcnow
+google.auth._helpers.utcnow = get_google_time
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
