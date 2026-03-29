@@ -743,7 +743,9 @@
     align-items: center;
   }
   .sobre-image {
-    aspect-ratio: 4/5;
+    width: 100%;
+    max-width: 380px;
+    height: 475px;
     background: linear-gradient(135deg, #1a1208, #2d1f0a 50%, #0a0a08);
     position: relative;
     overflow: hidden;
