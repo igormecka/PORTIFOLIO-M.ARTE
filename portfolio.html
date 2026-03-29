@@ -204,7 +204,7 @@
       thumbsContainer.innerHTML = '';
       currentLightboxImages.forEach((imgUrl, i) => {
         const thumb = document.createElement('img');
-        thumb.src = imgUrl + '=w150-h100-p-rw';
+        thumb.src = imgUrl + '=s150-rw';
         thumb.className = i === currentLightboxIndex ? 'lb-thumb active' : 'lb-thumb';
         thumb.onclick = (e) => {
           e.stopPropagation();
