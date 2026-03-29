@@ -750,6 +750,8 @@
     max-width: 380px;
     margin: 0 auto;
     border-radius: 2px;
+    border: 1px solid rgba(201,169,110,0.15);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
   }
   .sobre-image::before {
     content: '"';
