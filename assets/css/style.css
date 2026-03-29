@@ -398,6 +398,7 @@
   .album-card {
     min-width: 320px;
     max-width: 320px;
+    height: 480px; 
     flex-shrink: 0;
     scroll-snap-align: start;
     text-decoration: none;
