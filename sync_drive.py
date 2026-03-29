@@ -79,8 +79,8 @@ def get_images_in_folder(service, folder_id):
     images = []
     for item in items:
         if 'thumbnailLink' in item:
-            # Replace `=s220` with `=w1920` to get optimized 1920px image (reduces load time by 90%)
-            url = item['thumbnailLink'].split('=')[0] + '=w1920'
+            # Strip off size parameter to allow frontend to specify dimensions
+            url = item['thumbnailLink'].split('=')[0]
             images.append(url)
         elif 'webContentLink' in item:
             images.append(item['webContentLink'])

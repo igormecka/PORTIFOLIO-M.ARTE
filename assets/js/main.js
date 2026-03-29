@@ -95,7 +95,7 @@ function populateHero(images) {
   
   allImages.forEach((imgUrl) => {
     const img = document.createElement('img');
-    img.src = imgUrl;
+    img.src = imgUrl + '=s1920';
     img.className = 'mural-img';
     track.appendChild(img);
   });
@@ -127,7 +127,7 @@ function populateAlbums(albums) {
     let isScrolling = false;
 
     div.innerHTML = `
-      <div class="album-thumb" style="background-image: url('${album.cover}')">
+      <div class="album-thumb" style="background-image: url('${album.cover}=w800-h1000-p')">
         <div class="album-thumb-icon" style="position:absolute;font-family:var(--serif);font-size:3rem;font-style:italic;color:rgba(201,169,110,0.3);top:50%;left:50%;transform:translate(-50%,-50%);">${initials}</div>
       </div>
       <div class="album-arrow" style="position:absolute;top:1rem;right:1rem;color:var(--gold-dim);opacity:0.8;">↗</div>
@@ -149,7 +149,7 @@ function populateAlbums(albums) {
             } else {
                 imgIdx = (imgIdx - 1 + album.images.length) % album.images.length;
             }
-            thumbBg.style.backgroundImage = `url('${album.images[imgIdx]}')`;
+            thumbBg.style.backgroundImage = `url('${album.images[imgIdx]}=w800-h1000-p')`;
             setTimeout(() => { isScrolling = false; }, 300); 
             e.stopPropagation(); 
         }
@@ -157,7 +157,7 @@ function populateAlbums(albums) {
     
     div.addEventListener('mouseleave', () => {
         imgIdx = 0;
-        thumbBg.style.backgroundImage = `url('${album.cover}')`;
+        thumbBg.style.backgroundImage = `url('${album.cover}=w800-h1000-p')`;
     });
 
     // Manter o clique pra abrir a janela original
@@ -192,7 +192,7 @@ function openWeddingDynamic(album) {
     div.onclick = () => openLightbox(imgUrl, album.images, i);
     
     const img = document.createElement('img');
-    img.src = imgUrl; 
+    img.src = imgUrl + '=w600-h800-p'; 
     img.loading = 'lazy'; // Lazy load for performance
     
     div.appendChild(img);
@@ -277,7 +277,7 @@ function openLightbox(src, allImages = [], index = 0) {
     thumbsContainer.innerHTML = '';
     currentLightboxImages.forEach((imgUrl, i) => {
       const thumb = document.createElement('img');
-      thumb.src = imgUrl;
+      thumb.src = imgUrl + '=w150-h100-p';
       thumb.className = i === currentLightboxIndex ? 'lb-thumb active' : 'lb-thumb';
       thumb.onclick = (e) => {
         e.stopPropagation();
@@ -292,7 +292,7 @@ function openLightbox(src, allImages = [], index = 0) {
 function updateLightboxView() {
   const imgEl = document.getElementById('lightboxImg');
   if(!imgEl) return;
-  const src = currentLightboxImages[currentLightboxIndex];
+  const src = currentLightboxImages[currentLightboxIndex] + '=s1920';
   
   imgEl.style.opacity = 0;
   setTimeout(() => { 
