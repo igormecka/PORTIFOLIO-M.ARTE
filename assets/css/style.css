@@ -131,7 +131,7 @@
     display: flex;
     gap: 3vw;
     height: 70vh;
-    animation: panTrack 130s linear infinite;
+    animation: panTrack 200s linear infinite;
   }
   @keyframes panTrack {
     0% { transform: translateX(0); }
