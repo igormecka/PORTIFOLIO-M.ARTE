@@ -78,9 +78,9 @@ def get_images_in_folder(service, folder_id):
     
     images = []
     for item in items:
-        if 'thumbnailLink' in item:
-            # Strip off size parameter to allow frontend to specify dimensions
-            url = item['thumbnailLink'].split('=')[0]
+        if 'id' in item:
+            # Use permanent thumbnail endpoint instead of short-lived 'thumbnailLink'
+            url = f"https://drive.google.com/thumbnail?id={item['id']}"
             images.append(url)
         elif 'webContentLink' in item:
             images.append(item['webContentLink'])
