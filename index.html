@@ -27,13 +27,23 @@
 
 <!-- Hero Section (Home) -->
 <div id="main-site">
-<section id="hero">
-  <!-- Máscara de degrade suave nas bordas -->
-  <div class="mural-bg" id="muralBg"></div>
+<section id="hero" style="position:relative; overflow:hidden;">
+  <!-- Poeira Dourada (Atrás de tudo) -->
+  <div class="dust" id="dust" style="z-index: 0;"></div>
   
-  <div class="hero-huge-title">M.arte</div>
+  <!-- Linha Atrás -->
+  <div class="deco-line line-1" style="z-index: 0;"></div>
 
-  <div class="hero-content animate-up" style="position:relative; z-index:2; pointer-events:none;">
+  <!-- Máscara de degrade suave nas bordas -->
+  <div class="mural-bg" id="muralBg" style="z-index: 1;"></div>
+  
+  <div class="hero-huge-title" style="z-index: 2;">M.arte</div>
+
+  <!-- Linhas na Frente -->
+  <div class="deco-line line-2" style="z-index: 3;"></div>
+  <div class="deco-line line-3" style="z-index: 3;"></div>
+
+  <div class="hero-content animate-up" style="position:relative; z-index:4; pointer-events:none;">
     <div>
       <div class="section-label" style="margin-bottom: 1.5rem; color: var(--gold-dim);">
         Fotografia & Vídeo

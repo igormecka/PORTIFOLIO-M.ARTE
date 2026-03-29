@@ -163,6 +163,53 @@
     z-index: 10;
     mix-blend-mode: overlay;
   }
+  
+  /* DECORATIONS: Dust & Lines */
+  .dust {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .dust-particle {
+    position: absolute;
+    background: var(--gold);
+    border-radius: 50%;
+    opacity: 0;
+    animation: floatDust linear infinite;
+  }
+  @keyframes floatDust {
+    0% { transform: translateY(100vh) scale(0); opacity: 0; }
+    20% { opacity: 0.6; }
+    80% { opacity: 0; }
+    100% { transform: translateY(-20vh) scale(1.5); opacity: 0; }
+  }
+  .deco-line {
+    position: absolute;
+    background: linear-gradient(to bottom, transparent, var(--gold-dim), transparent);
+    pointer-events: none;
+  }
+  .line-1 {
+    width: 1px;
+    height: 150vh;
+    left: 15%;
+    top: -20%;
+  }
+  .line-2 {
+    width: 1px;
+    height: 80vh;
+    right: 15%;
+    top: 10%;
+  }
+  .line-3 {
+    height: 1px;
+    width: 100vw;
+    top: 70%;
+    left: 0;
+    background: linear-gradient(to right, transparent, var(--gold-dim), transparent);
+  }
+
   /* Simulate photo content in slides */
   .hero-slide::before {
     content: attr(data-label);

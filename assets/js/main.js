@@ -18,6 +18,24 @@ function animateRing() {
 }
 animateRing();
 
+// Dust particles
+function createDust() {
+  const dustContainer = document.getElementById('dust');
+  if(!dustContainer) return;
+  for(let i=0; i<40; i++) {
+    let p = document.createElement('div');
+    p.className = 'dust-particle';
+    let size = Math.random() * 3 + 1;
+    p.style.width = size + 'px';
+    p.style.height = size + 'px';
+    p.style.left = Math.random() * 100 + 'vw';
+    p.style.animationDuration = (Math.random() * 15 + 10) + 's';
+    p.style.animationDelay = (Math.random() * 10) + 's';
+    dustContainer.appendChild(p);
+  }
+}
+document.addEventListener('DOMContentLoaded', createDust);
+
 // Slideshow
 let currentSlide = 0;
 let slides = document.querySelectorAll('.hero-slide');
