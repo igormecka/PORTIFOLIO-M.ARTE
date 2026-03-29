@@ -194,9 +194,9 @@
   .curved-line {
     fill: none;
     stroke: rgba(201,169,110,0.4);
-    stroke-width: 1px;
-    stroke-dasharray: 4 12;
-    animation: flowLine 40s linear infinite;
+    stroke-width: 1.5px;
+    stroke-dasharray: 800 1200;
+    animation: flowLine 30s linear infinite;
   }
   .curved-line-solid {
     fill: none;
@@ -205,16 +205,16 @@
   }
   .line-front {
     stroke: rgba(201,169,110,0.6);
-    stroke-dasharray: 2 15;
-    animation: flowLineReverse 50s linear infinite;
+    stroke-dasharray: 1000 2000;
+    animation: flowLineReverse 40s linear infinite;
   }
   @keyframes flowLine {
-    0% { stroke-dashoffset: 1000; }
+    0% { stroke-dashoffset: 3000; }
     100% { stroke-dashoffset: 0; }
   }
   @keyframes flowLineReverse {
     0% { stroke-dashoffset: 0; }
-    100% { stroke-dashoffset: 1000; }
+    100% { stroke-dashoffset: 3000; }
   }
 
   /* Simulate photo content in slides */
