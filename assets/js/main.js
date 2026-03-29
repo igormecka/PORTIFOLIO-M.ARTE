@@ -186,7 +186,7 @@ function openWeddingDynamic(album) {
     div.onclick = () => openLightbox(imgUrl, album.images, i);
     
     const img = document.createElement('img');
-    img.src = imgUrl + '=w600-h800-p-rw'; 
+    img.src = imgUrl + '=w800-rw'; 
     img.loading = 'lazy'; // Lazy load for performance
     
     div.appendChild(img);
