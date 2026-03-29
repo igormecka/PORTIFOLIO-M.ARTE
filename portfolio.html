@@ -139,9 +139,12 @@
 </div>
 
 <!-- Lightbox -->
-<div class="lightbox" id="lightbox" onclick="closeLightbox()">
-  <button class="lightbox-close">Fechar ×</button>
-  <img id="lightboxImg" src="" alt="">
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" onclick="closeLightbox()">Fechar ×</button>
+  <button class="lightbox-btn lightbox-prev" onclick="prevLightboxImage(event)">&#10094;</button>
+  <img id="lightboxImg" src="" alt="" class="active">
+  <button class="lightbox-btn lightbox-next" onclick="nextLightboxImage(event)">&#10095;</button>
+  <div class="lightbox-thumbnails" id="lightboxThumbnails"></div>
 </div>
 
 <script src="assets/js/drive_data.js"></script>
@@ -178,14 +181,86 @@
   }
   createDust();
   
-  // Lightbox
-  function openLightbox(src) {
-      document.getElementById('lightboxImg').src = src;
-      document.getElementById('lightbox').classList.add('open');
+  // Lightbox Slider Logic
+  let currentLightboxImages = [];
+  let currentLightboxIndex = 0;
+
+  function openLightbox(src, allImages = [], index = 0) {
+    const lightbox = document.getElementById('lightbox');
+    const thumbsContainer = document.getElementById('lightboxThumbnails');
+    
+    if (allImages && allImages.length > 0) {
+      currentLightboxImages = allImages;
+      currentLightboxIndex = index;
+    } else {
+      currentLightboxImages = [src];
+      currentLightboxIndex = 0;
+    }
+    
+    updateLightboxView();
+    lightbox.classList.add('open');
+    
+    if (thumbsContainer) {
+      thumbsContainer.innerHTML = '';
+      currentLightboxImages.forEach((imgUrl, i) => {
+        const thumb = document.createElement('img');
+        thumb.src = imgUrl;
+        thumb.className = i === currentLightboxIndex ? 'lb-thumb active' : 'lb-thumb';
+        thumb.onclick = (e) => {
+          e.stopPropagation();
+          currentLightboxIndex = i;
+          updateLightboxView();
+        };
+        thumbsContainer.appendChild(thumb);
+      });
+    }
   }
-  function closeLightbox() {
-      document.getElementById('lightbox').classList.remove('open');
+
+  function updateLightboxView() {
+    const imgEl = document.getElementById('lightboxImg');
+    if(!imgEl) return;
+    const src = currentLightboxImages[currentLightboxIndex];
+    imgEl.style.opacity = 0;
+    setTimeout(() => { imgEl.src = src; imgEl.style.opacity = 1; }, 150);
+    
+    const thumbs = document.querySelectorAll('.lb-thumb');
+    thumbs.forEach((t, i) => {
+      if(i === currentLightboxIndex) {
+          t.classList.add('active');
+          t.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      } else { t.classList.remove('active'); }
+    });
   }
+
+  function prevLightboxImage(e) {
+    if (e) e.stopPropagation();
+    if (currentLightboxImages.length <= 1) return;
+    currentLightboxIndex = (currentLightboxIndex - 1 + currentLightboxImages.length) % currentLightboxImages.length;
+    updateLightboxView();
+  }
+
+  function nextLightboxImage(e) {
+    if (e) e.stopPropagation();
+    if (currentLightboxImages.length <= 1) return;
+    currentLightboxIndex = (currentLightboxIndex + 1) % currentLightboxImages.length;
+    updateLightboxView();
+  }
+
+  function closeLightbox(e) {
+    if (e && e.target !== document.getElementById('lightbox') && !e.target.classList.contains('lightbox-close')) return;
+    document.getElementById('lightbox').classList.remove('open');
+  }
+
+  const lb = document.getElementById('lightbox');
+  if(lb) lb.addEventListener('click', closeLightbox);
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeLightbox();
+    if (lb && lb.classList.contains('open')) {
+        if (e.key === 'ArrowLeft') prevLightboxImage();
+        if (e.key === 'ArrowRight') nextLightboxImage();
+    }
+  });
 
   document.addEventListener('DOMContentLoaded', () => {
     if (typeof driveData === 'undefined' || !driveData.albums) return;
@@ -245,11 +320,11 @@
     
     grid.innerHTML = '';
     
-    album.images.forEach(imgUrl => {
+    album.images.forEach((imgUrl, i) => {
       const img = document.createElement('img');
       img.src = imgUrl;
       img.loading = 'lazy';
-      img.onclick = () => openLightbox(imgUrl);
+      img.onclick = () => openLightbox(imgUrl, album.images, i);
       grid.appendChild(img);
     });
     

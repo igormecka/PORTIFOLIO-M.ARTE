@@ -21,8 +21,8 @@
     M<span>.</span>arte
   </a>
   <ul class="nav-links">
-    <li><a href="#portfolio">Portfólio</a></li>
-    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="index.html">Início</a></li>
+    <li><a href="portfolio.html">Portfólio</a></li>
     <li><a href="#contato">Contato</a></li>
   </ul>
 </nav>
@@ -167,9 +167,12 @@
 </div>
 
 <!-- Lightbox -->
-<div class="lightbox" id="lightbox" onclick="closeLightbox()">
-  <button class="lightbox-close">Fechar ×</button>
-  <img id="lightboxImg" src="" alt="">
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" onclick="closeLightbox()">Fechar ×</button>
+  <button class="lightbox-btn lightbox-prev" onclick="prevLightboxImage(event)">&#10094;</button>
+  <img id="lightboxImg" src="" alt="" class="active">
+  <button class="lightbox-btn lightbox-next" onclick="nextLightboxImage(event)">&#10095;</button>
+  <div class="lightbox-thumbnails" id="lightboxThumbnails"></div>
 </div>
 
 <!-- SCRIPT INCLUSION: Drive Data comes BEFORE main.js -->
