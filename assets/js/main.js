@@ -87,7 +87,13 @@ function populateHero(images) {
   track.className = 'mural-track';
   container.appendChild(track);
   
-  images.forEach((imgUrl) => {
+  // Duplicar imagens para criar o efeito de "Loop Infinito" sem deixar buracos no final
+  let loopImages = [];
+  while (loopImages.length < 20) { 
+     loopImages = [...loopImages, ...images]; 
+  }
+  
+  loopImages.forEach((imgUrl) => {
     const img = document.createElement('img');
     img.src = imgUrl + '=h800-rw';
     img.className = 'mural-img';
