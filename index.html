@@ -8,6 +8,8 @@
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
+<!-- Poeira Dourada Global (Todas as páginas) -->
+<div class="dust" id="dust" style="z-index: -1;"></div>
 
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
@@ -28,20 +30,26 @@
 <!-- Hero Section (Home) -->
 <div id="main-site">
 <section id="hero" style="position:relative; overflow:hidden;">
-  <!-- Poeira Dourada (Atrás de tudo) -->
-  <div class="dust" id="dust" style="z-index: 0;"></div>
-  
-  <!-- Linha Atrás -->
-  <div class="deco-line line-1" style="z-index: 0;"></div>
+  <!-- Linhas Curvas (Atrás do Mural) -->
+  <div class="deco-line-container" style="z-index: 0;">
+    <svg viewBox="0 0 1440 800" preserveAspectRatio="xMidYMid slice" style="width:100%; height:100%; position:absolute; opacity:0.6;">
+      <path class="curved-line-solid" d="M -100 500 Q 350 250, 720 400 T 1540 350" />
+      <path class="curved-line" d="M -100 500 Q 350 250, 720 400 T 1540 350" />
+    </svg>
+  </div>
 
   <!-- Máscara de degrade suave nas bordas -->
   <div class="mural-bg" id="muralBg" style="z-index: 1;"></div>
   
   <div class="hero-huge-title" style="z-index: 2;">M.arte</div>
 
-  <!-- Linhas na Frente -->
-  <div class="deco-line line-2" style="z-index: 3;"></div>
-  <div class="deco-line line-3" style="z-index: 3;"></div>
+  <!-- Linhas Curvas na Frente -->
+  <div class="deco-line-container" style="z-index: 3;">
+    <svg viewBox="0 0 1440 800" preserveAspectRatio="xMidYMid slice" style="width:100%; height:100%; position:absolute; opacity:0.8;">
+      <path class="curved-line line-front" style="animation-duration: 35s;" d="M -100 650 Q 450 750, 850 450 T 1540 250" />
+      <path class="curved-line line-front" style="animation-duration: 45s;" d="M 1540 600 Q 950 800, 680 480 T -100 300" />
+    </svg>
+  </div>
 
   <div class="hero-content animate-up" style="position:relative; z-index:4; pointer-events:none;">
     <div>

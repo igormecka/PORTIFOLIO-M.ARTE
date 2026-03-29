@@ -166,10 +166,10 @@
   
   /* DECORATIONS: Dust & Lines */
   .dust {
-    position: absolute;
+    position: fixed;
     inset: 0;
     pointer-events: none;
-    z-index: 0;
+    z-index: -1;
     overflow: hidden;
   }
   .dust-particle {
@@ -185,29 +185,36 @@
     80% { opacity: 0; }
     100% { transform: translateY(-20vh) scale(1.5); opacity: 0; }
   }
-  .deco-line {
+  .deco-line-container {
     position: absolute;
-    background: linear-gradient(to bottom, transparent, var(--gold-dim), transparent);
+    inset: 0;
     pointer-events: none;
+    overflow: hidden;
   }
-  .line-1 {
-    width: 1px;
-    height: 150vh;
-    left: 15%;
-    top: -20%;
+  .curved-line {
+    fill: none;
+    stroke: rgba(201,169,110,0.4);
+    stroke-width: 1px;
+    stroke-dasharray: 4 12;
+    animation: flowLine 40s linear infinite;
   }
-  .line-2 {
-    width: 1px;
-    height: 80vh;
-    right: 15%;
-    top: 10%;
+  .curved-line-solid {
+    fill: none;
+    stroke: rgba(201,169,110,0.15);
+    stroke-width: 1px;
   }
-  .line-3 {
-    height: 1px;
-    width: 100vw;
-    top: 70%;
-    left: 0;
-    background: linear-gradient(to right, transparent, var(--gold-dim), transparent);
+  .line-front {
+    stroke: rgba(201,169,110,0.6);
+    stroke-dasharray: 2 15;
+    animation: flowLineReverse 50s linear infinite;
+  }
+  @keyframes flowLine {
+    0% { stroke-dashoffset: 1000; }
+    100% { stroke-dashoffset: 0; }
+  }
+  @keyframes flowLineReverse {
+    0% { stroke-dashoffset: 0; }
+    100% { stroke-dashoffset: 1000; }
   }
 
   /* Simulate photo content in slides */
