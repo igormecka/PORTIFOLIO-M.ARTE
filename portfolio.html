@@ -204,7 +204,7 @@
       thumbsContainer.innerHTML = '';
       currentLightboxImages.forEach((imgUrl, i) => {
         const thumb = document.createElement('img');
-        thumb.src = imgUrl + '=w150-h100-p';
+        thumb.src = imgUrl + '=w150-h100-p-rw';
         thumb.className = i === currentLightboxIndex ? 'lb-thumb active' : 'lb-thumb';
         thumb.onclick = (e) => {
           e.stopPropagation();
@@ -219,7 +219,7 @@
   function updateLightboxView() {
     const imgEl = document.getElementById('lightboxImg');
     if(!imgEl) return;
-    const src = currentLightboxImages[currentLightboxIndex] + '=s1920';
+    const src = currentLightboxImages[currentLightboxIndex] + '=s1600-rw';
     imgEl.style.opacity = 0;
     setTimeout(() => { imgEl.src = src; imgEl.style.opacity = 1; }, 150);
     
@@ -322,7 +322,7 @@
     
     album.images.forEach((imgUrl, i) => {
       const img = document.createElement('img');
-      img.src = imgUrl + '=w600-h800-p';
+      img.src = imgUrl + '=w600-h800-p-rw';
       img.loading = 'lazy';
       img.onclick = () => openLightbox(imgUrl, album.images, i);
       grid.appendChild(img);
