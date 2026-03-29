@@ -116,7 +116,11 @@
     <img src="assets/img/logo.png" alt="M.arte" style="height:32px; margin-right:15px; vertical-align:middle;">
     M<span>.</span>arte
   </a>
-  <ul class="nav-links">
+  <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+    <span></span>
+    <span></span>
+  </button>
+  <ul class="nav-links" id="navLinks">
     <li><a href="index.html">Início</a></li>
     <li><a href="portfolio.html" style="color:var(--gold)">Portfólio</a></li>
   </ul>
@@ -147,6 +151,26 @@
   <div class="lightbox-thumbnails" id="lightboxThumbnails"></div>
 </div>
 
+<script>
+  // Mobile Menu Toggle
+  const menuToggle = document.getElementById('menuToggle');
+  const navLinks = document.getElementById('navLinks');
+  
+  if (menuToggle && navLinks) {
+    menuToggle.addEventListener('click', () => {
+      menuToggle.classList.toggle('active');
+      navLinks.classList.toggle('active');
+    });
+
+    // Close menu when clicking a link
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        menuToggle.classList.remove('active');
+        navLinks.classList.remove('active');
+      });
+    });
+  }
+</script>
 <script src="assets/js/drive_data.js"></script>
 <script>
   // Cursor básico

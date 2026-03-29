@@ -20,9 +20,14 @@
     <img src="assets/img/logo.png" alt="M.arte" style="height:32px; margin-right:15px; vertical-align:middle;">
     M<span>.</span>arte
   </a>
-  <ul class="nav-links">
-    <li><a href="index.html">Início</a></li>
-    <li><a href="portfolio.html">Portfólio</a></li>
+  <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+    <span></span>
+    <span></span>
+  </button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#inicio">Início</a></li>
+    <li><a href="#portfolio">Portfólio</a></li>
+    <li><a href="#sobre">Sobre</a></li>
     <li><a href="#contato">Contato</a></li>
   </ul>
 </nav>
@@ -172,6 +177,26 @@
 </div>
 
 <!-- SCRIPT INCLUSION: Drive Data comes BEFORE main.js -->
+<script>
+  // Mobile Menu Toggle
+  const menuToggle = document.getElementById('menuToggle');
+  const navLinks = document.getElementById('navLinks');
+  
+  if (menuToggle && navLinks) {
+    menuToggle.addEventListener('click', () => {
+      menuToggle.classList.toggle('active');
+      navLinks.classList.toggle('active');
+    });
+
+    // Close menu when clicking a link
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        menuToggle.classList.remove('active');
+        navLinks.classList.remove('active');
+      });
+    });
+  }
+</script>
 <script src="assets/js/drive_data.js"></script>
 <script src="assets/js/main.js"></script>
 </body>
